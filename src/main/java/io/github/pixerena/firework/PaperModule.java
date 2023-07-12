@@ -1,4 +1,4 @@
-package com.pixerena.firework;
+package io.github.pixerena.firework;
 
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import com.google.inject.AbstractModule;

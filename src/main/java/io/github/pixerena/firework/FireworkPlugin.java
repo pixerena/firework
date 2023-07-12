@@ -1,10 +1,10 @@
-package com.pixerena.firework;
+package io.github.pixerena.firework;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.pixerena.firework.event.EventListenerManager;
-import com.pixerena.firework.plugin.component.ComponentManager;
+import io.github.pixerena.firework.event.EventListenerManager;
+import io.github.pixerena.firework.plugin.component.ComponentManager;
 import io.github.classgraph.ClassGraph;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;

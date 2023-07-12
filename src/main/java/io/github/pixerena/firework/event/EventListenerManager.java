@@ -1,11 +1,11 @@
-package com.pixerena.firework.event;
+package io.github.pixerena.firework.event;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
-import com.pixerena.firework.plugin.component.ComponentManager;
-import com.pixerena.firework.plugin.component.ComponentModule;
+import io.github.pixerena.firework.plugin.component.ComponentManager;
+import io.github.pixerena.firework.plugin.component.ComponentModule;
 import io.github.classgraph.ScanResult;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;

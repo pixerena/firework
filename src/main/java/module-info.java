@@ -8,5 +8,5 @@ module com.pixerena.firework {
 
     requires io.github.classgraph;
 
-    exports com.pixerena.firework;
+    exports io.github.pixerena.firework;
 }

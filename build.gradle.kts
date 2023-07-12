@@ -1,9 +1,10 @@
 plugins {
     `java-library`
     `maven-publish`
+    signing
 }
 
-group = "com.pixerena.firework"
+group = "io.github.pixerena"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -67,16 +68,21 @@ publishing {
     repositories {
         maven {
             val isSnapshot = version.toString().endsWith("SNAPSHOT")
-            val releaseRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            val snapshotRepoUrl = uri("https://maven.pkg.github.com/pixerena/firework")
+            val releaseRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 
             url = if (isSnapshot) snapshotRepoUrl else releaseRepoUrl
             credentials {
-                username = System.getenv(if (isSnapshot) "GITHUB_ACTOR" else "MAVEN_USERNAME")
-                password = System.getenv(if (isSnapshot) "GITHUB_TOKEN" else "MAVEN_PASSWORD")
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
     }
+}
+
+signing {
+    useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
+    sign(publishing.publications["mavenJava"])
 }
 
 tasks.test {

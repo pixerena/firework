@@ -1,4 +1,4 @@
-package com.pixerena.firework.plugin.component;
+package io.github.pixerena.firework.plugin.component;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
