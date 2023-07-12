@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.pixerena"
+group = "com.pixerena.firework"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -30,6 +30,15 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
             pom {
                 name.set("Firework")
                 description.set("The missing PaperMC plugin framework")
@@ -78,8 +87,4 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
-}
-
-tasks.publish {
-    dependsOn(":build")
 }
