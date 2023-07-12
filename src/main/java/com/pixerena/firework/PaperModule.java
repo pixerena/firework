@@ -39,6 +39,7 @@ class PaperModule extends AbstractModule {
         bind(FileConfiguration.class).toInstance(this.plugin.getConfig());
         // Disable java.util.logging.Logger since it conflicts with Guice built-in Logger bindings
         // bind(Logger.class).toInstance(this.plugin.getLogger());
+        //noinspection UnstableApiUsage
         bind(PluginMeta.class).toInstance(this.plugin.getPluginMeta());
         bind(Server.class).toInstance(server);
 

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
-public interface ComponentManager<T> {
+public interface ComponentManager {
     @NotNull Collection<Module> provideModules();
 
     void onPluginEnable(@NotNull Injector injector);

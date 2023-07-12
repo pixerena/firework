@@ -4,7 +4,6 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
-import com.google.inject.util.Types;
 import com.pixerena.firework.plugin.component.ComponentManager;
 import com.pixerena.firework.plugin.component.ComponentModule;
 import io.github.classgraph.ScanResult;
@@ -17,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class EventListenerManager implements ComponentManager<Listener> {
+public class EventListenerManager implements ComponentManager {
     private final List<Class<Listener>> eventListenersClasses;
 
     public EventListenerManager(ScanResult scanResult) {

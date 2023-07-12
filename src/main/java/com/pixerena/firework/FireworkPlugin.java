@@ -18,7 +18,7 @@ public class FireworkPlugin extends JavaPlugin {
 
     private Logger logger;
 
-    private final Set<ComponentManager<?>> componentManagers = new HashSet<>();
+    private final Set<ComponentManager> componentManagers = new HashSet<>();
     private final String[] scannedPackages;
 
     private Injector injector;
