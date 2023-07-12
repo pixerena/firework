@@ -37,7 +37,8 @@ class PaperModule extends AbstractModule {
         // Methods from org.bukkit.plugin.java.JavaPlugin
         var server = this.plugin.getServer();
         bind(FileConfiguration.class).toInstance(this.plugin.getConfig());
-//        bind(Logger.class).toInstance(this.plugin.getLogger());
+        // Disable java.util.logging.Logger since it conflicts with Guice built-in Logger bindings
+        // bind(Logger.class).toInstance(this.plugin.getLogger());
         bind(PluginMeta.class).toInstance(this.plugin.getPluginMeta());
         bind(Server.class).toInstance(server);
 
@@ -59,7 +60,8 @@ class PaperModule extends AbstractModule {
         bind(PotionBrewer.class).toInstance(server.getPotionBrewer());
         bind(RegionScheduler.class).toInstance(server.getRegionScheduler());
         bind(BukkitScheduler.class).toInstance(server.getScheduler());
-//        bind(ScoreboardManager.class).toInstance(server.getScoreboardManager());
+        // Disable ScoreboardManager binding since it violates @NotNull annotation and returns null
+        // bind(ScoreboardManager.class).toInstance(server.getScoreboardManager());
         bind(ServicesManager.class).toInstance(server.getServicesManager());
         bind(StructureManager.class).toInstance(server.getStructureManager());
     }
