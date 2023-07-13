@@ -69,7 +69,7 @@ publishing {
             }
         }
     }
-    repositories {
+    /*repositories {
         maven {
             val isSnapshot = version.toString().endsWith("SNAPSHOT")
 
@@ -79,12 +79,7 @@ publishing {
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
-    }
-}
-
-signing {
-    useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
-    sign(publishing.publications["mavenJava"])
+    }*/
 }
 
 nexusPublishing.repositories {
@@ -94,6 +89,11 @@ nexusPublishing.repositories {
         username = System.getenv("MAVEN_USERNAME")
         password = System.getenv("MAVEN_PASSWORD")
     }
+}
+
+signing {
+    useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
+    sign(publishing.publications["mavenJava"])
 }
 
 tasks.test {
