@@ -2,10 +2,14 @@ plugins {
     `java-library`
     `maven-publish`
     signing
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 group = "io.github.pixerena"
 version = "0.1.1-SNAPSHOT"
+
+val nexusReleaseUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+val nexusSnapshotUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 
 java {
     withJavadocJar()
@@ -68,10 +72,8 @@ publishing {
     repositories {
         maven {
             val isSnapshot = version.toString().endsWith("SNAPSHOT")
-            val releaseRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            val snapshotRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 
-            url = if (isSnapshot) snapshotRepoUrl else releaseRepoUrl
+            url = if (isSnapshot) nexusSnapshotUrl else nexusReleaseUrl
             credentials {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
@@ -83,6 +85,15 @@ publishing {
 signing {
     useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
     sign(publishing.publications["mavenJava"])
+}
+
+nexusPublishing.repositories {
+    sonatype {
+        nexusUrl = nexusReleaseUrl
+        snapshotRepositoryUrl = nexusSnapshotUrl
+        username = System.getenv("MAVEN_USERNAME")
+        password = System.getenv("MAVEN_PASSWORD")
+    }
 }
 
 tasks.test {
