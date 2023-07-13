@@ -6,10 +6,7 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.1.1-SNAPSHOT"
-
-val nexusReleaseUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-val nexusSnapshotUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+version = "0.1.1"
 
 java {
     withJavadocJar()
@@ -69,23 +66,12 @@ publishing {
             }
         }
     }
-    /*repositories {
-        maven {
-            val isSnapshot = version.toString().endsWith("SNAPSHOT")
-
-            url = if (isSnapshot) nexusSnapshotUrl else nexusReleaseUrl
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-    }*/
 }
 
 nexusPublishing.repositories {
     sonatype {
-        nexusUrl = nexusReleaseUrl
-        snapshotRepositoryUrl = nexusSnapshotUrl
+        nexusUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         username = System.getenv("MAVEN_USERNAME")
         password = System.getenv("MAVEN_PASSWORD")
     }
