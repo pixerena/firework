@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 
 java {
     withJavadocJar()
@@ -67,7 +67,7 @@ publishing {
     }
     repositories {
         maven {
-            val isSnapshot = version.toString().endsWith("SNAPSHOT")
+            val isSnapshot = System.getenv("GITHUB_EVENT_NAME") != "release"
             val releaseRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             val snapshotRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 
