@@ -16,9 +16,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class is responsible for managing the {@link Listener}.
+ * It will scan the classpath for classes that implements {@link Listener} and
+ * register them in the {@link PluginManager}.
+ */
 public class EventListenerManager implements ComponentManager {
     private final List<Class<Listener>> eventListenersClasses;
 
+    /**
+     * Creates a new instance of {@link EventListenerManager}.
+     * @param scanResult The result of the classpath scan.
+     */
     public EventListenerManager(ScanResult scanResult) {
         this.eventListenersClasses = scanResult.getClassesImplementing(Listener.class)
                 .loadClasses(Listener.class);

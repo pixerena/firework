@@ -6,10 +6,21 @@ import com.google.inject.multibindings.Multibinder;
 
 import java.util.Collection;
 
+/**
+ * A generic Guice module that binds a set of consumer-provided components to a given type.
+ * @param <T> The type of the components.
+ * @since 0.1.0
+ */
 public class ComponentModule<T> extends AbstractModule {
     private final Class<T> type;
-    protected final Collection<Class<T>> componentsClasses;
+    private final Collection<Class<T>> componentsClasses;
 
+    /**
+     * Creates a new instance of the {@link ComponentModule}.
+     * @param type The type of the components.
+     * @param componentsClasses The classes of the components.
+     * @since 0.1.0
+     */
     public ComponentModule(Class<T> type, Collection<Class<T>> componentsClasses) {
         this.type = type;
         this.componentsClasses = componentsClasses;

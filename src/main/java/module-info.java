@@ -1,3 +1,6 @@
+/**
+ * This is the main module for the Firework framework.
+ */
 @SuppressWarnings("requires-transitive-automatic")
 module com.pixerena.firework {
     requires transitive com.google.guice;
