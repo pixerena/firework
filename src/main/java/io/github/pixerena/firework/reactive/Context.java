@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Context {
-    private static final List<Effect> context = new ArrayList<>();
+    private static final List<Reaction> context = new ArrayList<>();
 
-    static List<Effect> getContext() {
+    static List<Reaction> getContext() {
         return context;
     }
 }
