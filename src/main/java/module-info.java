@@ -12,4 +12,5 @@ module com.pixerena.firework {
     requires io.github.classgraph;
 
     exports io.github.pixerena.firework;
+    exports io.github.pixerena.firework.reactive;
 }
