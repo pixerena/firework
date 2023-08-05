@@ -94,6 +94,16 @@ public class FireworkPlugin extends JavaPlugin {
         return new ArrayList<>();
     }
 
+    /**
+     * Subclass can access the created Guice injector to inject object.
+     * This method is only available after the {@link #onEnable()} method is called.
+     * @return The Guice injector containing framework and user-provided modules.
+     */
+    @SuppressWarnings("unused")
+    protected Injector getInjector() {
+        return injector;
+    }
+
     private Injector createInjector() {
         var modules = new ArrayList<Module>();
 
