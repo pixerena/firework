@@ -3,6 +3,7 @@ package io.github.pixerena.firework;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.inject.Stage;
 import io.github.classgraph.ClassGraph;
 import io.github.pixerena.firework.event.EventListenerManager;
 import io.github.pixerena.firework.plugin.component.ComponentManager;
@@ -116,6 +117,6 @@ public class FireworkPlugin extends JavaPlugin {
         // Add user provided additional modules
         modules.addAll(this.providesAdditionalModules());
 
-        return Guice.createInjector(modules.toArray(Module[]::new));
+        return Guice.createInjector(Stage.PRODUCTION, modules.toArray(Module[]::new));
     }
 }
