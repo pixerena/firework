@@ -22,7 +22,7 @@ class DefaultSignal<T> implements Signal<T> {
     }
 
     @Override
-    public @Nullable T get() {
+    public T get() {
         var context = Context.getContext();
 
         if (!context.isEmpty()) {

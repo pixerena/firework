@@ -1,7 +1,6 @@
 package io.github.pixerena.firework.reactive;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -27,5 +26,5 @@ public interface Memo<T> {
      * Gets the value of the memo.
      * @return The value.
      */
-    @Nullable T get();
+    T get();
 }
