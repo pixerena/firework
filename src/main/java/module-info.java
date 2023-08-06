@@ -13,4 +13,6 @@ module com.pixerena.firework {
 
     exports io.github.pixerena.firework;
     exports io.github.pixerena.firework.reactive;
+    exports io.github.pixerena.firework.internal;
+    exports io.github.pixerena.firework.internal.event;
 }

@@ -6,11 +6,17 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.2.1-SNAPSHOT"
+version = "0.3.0-SNAPSHOT"
 
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+configurations {
+    configurations.testImplementation.get().apply {
+        extendsFrom(configurations.compileOnly.get())
+    }
 }
 
 repositories {
@@ -19,8 +25,7 @@ repositories {
 }
 
 dependencies {
-    api("com.google.inject:guice:7.0.0")
-
+    implementation("com.google.inject:guice:7.0.0")
     implementation("io.github.classgraph:classgraph:4.8.161")
 
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
@@ -48,7 +53,7 @@ publishing {
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
                 developers {
@@ -90,4 +95,10 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+}
+
+tasks.register<Jar>("packageTests") {
+    from(sourceSets.main.get().output, sourceSets.test.get().output, configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveClassifier.set("test")
 }

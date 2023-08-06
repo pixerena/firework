@@ -1,0 +1,6 @@
+name: TestPlugin
+version: 0.3.0-SNAPSHOT
+main: io.github.pixerena.firework.TestPlugin
+description: A test plugin
+author: pixerena
+api-version: '1.20'
