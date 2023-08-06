@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.3.0"
+version = "0.4.0-SNAPSHOT"
 
 java {
     withJavadocJar()
@@ -103,7 +103,7 @@ tasks.javadoc {
     (options as StandardJavadocDocletOptions).links("https://jd.papermc.io/paper/1.20/", "https://google.github.io/guice/api-docs/latest/javadoc/")
 
     // The following lines will workaround the problem with the exclude
-    var sourceSetDirectories = sourceSets.main.get().java.srcDirs.joinToString(":")
+    val sourceSetDirectories = sourceSets.main.get().java.srcDirs.joinToString(":")
     (options as StandardJavadocDocletOptions).addStringOption("-source-path", sourceSetDirectories)
 }
 
