@@ -28,6 +28,14 @@ import java.util.Set;
  * <p>
  * Noted that the {@link FireworkPlugin} overrides the {@link JavaPlugin#onLoad()}, {@link JavaPlugin#onEnable()} and
  * {@link JavaPlugin#onDisable()} methods. If you override any of these methods, you must call the super method.
+ *
+ * <pre>
+ * public class ExamplePlugin extends FireworkPlugin {
+ *    public ExamplePlugin() {
+ *        super("my.plugin.package");
+ *    }
+ * }
+ * </pre>
  */
 public class FireworkPlugin extends JavaPlugin {
     private final String[] scannedPackages;

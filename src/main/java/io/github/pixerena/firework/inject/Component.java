@@ -20,6 +20,28 @@ import java.lang.annotation.*;
  * them into other components without worrying about creating
  * multiple instances.
  * </p>
+ *
+ * <pre>
+ * {@literal @}Component
+ * public class ExampleComponent {
+ *    private final AnotherComponent anotherComponent;
+ *
+ *    {@literal @}Inject
+ *    public ExampleComponent(AnotherComponent anotherComponent) {
+ *      this.anotherComponent = anotherComponent;
+ *    }
+ * }
+ *
+ * {@literal @}Component
+ * public class AnotherComponent {
+ *   // ...
+ *
+ *   {@literal @}Inject
+ *   public AnotherComponent() {
+ *      // ...
+ *   }
+ * }
+ * </pre>
  */
 @Target({ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

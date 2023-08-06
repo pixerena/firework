@@ -18,6 +18,16 @@ import java.lang.annotation.*;
  * Event listeners are automatically registered by the Firework framework,
  * and it inherits the {@link io.github.pixerena.firework.inject.Component} annotation.
  * </p>
+ *
+ * <pre>
+ * {@literal @}EventListener
+ * public class ExampleListener implements Listener {
+ *    {@literal @}EventHandler
+ *    public void onPlayerJoin(PlayerJoinEvent event) {
+ *    // ...
+ *    }
+ * }
+ * </pre>
  */
 @Target({ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
