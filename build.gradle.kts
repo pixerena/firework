@@ -25,7 +25,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.inject:guice:7.0.0")
+    api("com.google.inject:guice:7.0.0")
+
     implementation("io.github.classgraph:classgraph:4.8.161")
 
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
@@ -99,7 +100,7 @@ tasks.javadoc {
     exclude("io/github/pixerena/firework/internal/**")
 
     // Link external library
-    (options as StandardJavadocDocletOptions).links("https://jd.papermc.io/paper/1.20/")
+    (options as StandardJavadocDocletOptions).links("https://jd.papermc.io/paper/1.20/", "https://google.github.io/guice/api-docs/latest/javadoc/")
 
     // The following lines will workaround the problem with the exclude
     var sourceSetDirectories = sourceSets.main.get().java.srcDirs.joinToString(":")

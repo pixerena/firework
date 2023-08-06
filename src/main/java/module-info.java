@@ -1,5 +1,13 @@
 /**
  * This is the main module for the Firework framework.
+ *
+ * <p>
+ * This module is responsible for providing the core functionality of the
+ * Firework framework. We split each feature into its own package for ease of
+ * use and to make it easier to understand the framework.
+ * </p>
+ *
+ * @see io.github.pixerena.firework.FireworkPlugin
  */
 @SuppressWarnings("requires-transitive-automatic")
 module com.pixerena.firework {
