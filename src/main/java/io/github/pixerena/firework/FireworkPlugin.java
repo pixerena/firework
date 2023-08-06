@@ -10,12 +10,12 @@ import io.github.pixerena.firework.internal.event.EventListenerManager;
 import io.github.pixerena.firework.internal.event.EventModule;
 import io.github.pixerena.firework.internal.lifecycle.LifecycleModule;
 import io.github.pixerena.firework.internal.lifecycle.LifecycleNotifier;
+import io.github.pixerena.firework.internal.ui.UIComponentModule;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class is the main class of the Firework framework and the entrypoint for the plugin.
@@ -38,7 +38,7 @@ import java.util.Set;
  * </pre>
  */
 public class FireworkPlugin extends JavaPlugin {
-    private final String[] scannedPackages;
+    private final List<String> scannedPackages = new ArrayList<>();
     private final Set<Module> modules = new HashSet<>();
 
     private LifecycleNotifier lifecycleNotifier;
@@ -50,7 +50,10 @@ public class FireworkPlugin extends JavaPlugin {
      * @param scannedPackages The packages that will be scanned for classes that implements common Bukkit interfaces.
      */
     protected FireworkPlugin(String... scannedPackages) {
-        this.scannedPackages = scannedPackages;
+        // Add default scanned packages
+        this.scannedPackages.add("io.github.pixerena.firework.ui");
+
+        this.scannedPackages.addAll(Arrays.asList(scannedPackages));
     }
 
     @Override
@@ -63,13 +66,14 @@ public class FireworkPlugin extends JavaPlugin {
         logger.info("Scanning classes and resources info");
         try (var scanResult = new ClassGraph()
                 .enableAllInfo()
-                .acceptPackages(scannedPackages)
+                .acceptPackages(scannedPackages.toArray(new String[0]))
                 .scan()
         ) {
             modules.addAll(Set.of(
                     new ComponentModule(scanResult),
                     new EventModule(scanResult),
-                    new LifecycleModule(scanResult)
+                    new LifecycleModule(scanResult),
+                    new UIComponentModule(scanResult)
             ));
         }
     }
