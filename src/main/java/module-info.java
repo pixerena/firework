@@ -25,4 +25,5 @@ module com.pixerena.firework {
     exports io.github.pixerena.firework.event;
     exports io.github.pixerena.firework.lifecycle;
     exports io.github.pixerena.firework.reactive;
+    exports io.github.pixerena.firework.ui;
 }
