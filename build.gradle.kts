@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.4.0-SNAPSHOT"
+version = "0.4.0"
 
 java {
     withJavadocJar()
