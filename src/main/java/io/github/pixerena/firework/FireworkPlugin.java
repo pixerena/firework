@@ -51,7 +51,7 @@ public class FireworkPlugin extends JavaPlugin {
      */
     protected FireworkPlugin(String... scannedPackages) {
         // Add default scanned packages
-        this.scannedPackages.add("io.github.pixerena.firework.ui");
+        this.scannedPackages.add("io.github.pixerena.firework.internal.ui");
 
         this.scannedPackages.addAll(Arrays.asList(scannedPackages));
     }
