@@ -12,7 +12,8 @@ module com.pixerena.firework {
     requires io.github.classgraph;
 
     exports io.github.pixerena.firework;
+    exports io.github.pixerena.firework.inject;
+    exports io.github.pixerena.firework.event;
+    exports io.github.pixerena.firework.lifecycle;
     exports io.github.pixerena.firework.reactive;
-    exports io.github.pixerena.firework.internal;
-    exports io.github.pixerena.firework.internal.event;
 }

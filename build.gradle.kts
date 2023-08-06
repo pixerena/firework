@@ -95,6 +95,15 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+
+    exclude("io/github/pixerena/firework/internal/**")
+
+    // Link external library
+    (options as StandardJavadocDocletOptions).links("https://jd.papermc.io/paper/1.20/")
+
+    // The following lines will workaround the problem with the exclude
+    var sourceSetDirectories = sourceSets.main.get().java.srcDirs.joinToString(":")
+    (options as StandardJavadocDocletOptions).addStringOption("-source-path", sourceSetDirectories)
 }
 
 tasks.register<Jar>("packageTests") {

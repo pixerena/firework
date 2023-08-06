@@ -1,7 +1,6 @@
 package io.github.pixerena.firework;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
 import io.github.classgraph.ClassGraph;
@@ -9,6 +8,8 @@ import io.github.pixerena.firework.internal.ComponentModule;
 import io.github.pixerena.firework.internal.PaperModule;
 import io.github.pixerena.firework.internal.event.EventListenerManager;
 import io.github.pixerena.firework.internal.event.EventModule;
+import io.github.pixerena.firework.internal.lifecycle.LifecycleModule;
+import io.github.pixerena.firework.internal.lifecycle.LifecycleNotifier;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
@@ -29,13 +30,12 @@ import java.util.Set;
  * {@link JavaPlugin#onDisable()} methods. If you override any of these methods, you must call the super method.
  */
 public class FireworkPlugin extends JavaPlugin {
+    private final String[] scannedPackages;
+    private final Set<Module> modules = new HashSet<>();
+
+    private LifecycleNotifier lifecycleNotifier;
 
     private Logger logger;
-
-    private final String[] scannedPackages;
-
-    private Injector injector;
-    private final Set<Module> modules = new HashSet<>();
 
     /**
      * Creates a new instance of {@link FireworkPlugin}.
@@ -60,7 +60,8 @@ public class FireworkPlugin extends JavaPlugin {
         ) {
             modules.addAll(Set.of(
                     new ComponentModule(scanResult),
-                    new EventModule(scanResult)
+                    new EventModule(scanResult),
+                    new LifecycleModule(scanResult)
             ));
         }
     }
@@ -71,21 +72,25 @@ public class FireworkPlugin extends JavaPlugin {
 
         // Create injector
         modules.add(new PaperModule(this));
-        injector = Guice.createInjector(Stage.PRODUCTION, modules);
-        logBindings(injector);
+        var injector = Guice.createInjector(Stage.PRODUCTION, modules);
 
         // Register event listeners
+        this.logger.info("Registering event listeners");
         injector.getInstance(EventListenerManager.class).registerEventListeners();
+
+        // Retrieve lifecycle notifier
+        lifecycleNotifier = injector.getInstance(LifecycleNotifier.class);
+
+        // Schedule Bukkit task on first tick to notify firstTick event
+        getServer().getScheduler().runTask(this, () -> lifecycleNotifier.notifyServerFirstTick());
+
+        // Notify onEnable event
+        lifecycleNotifier.notifyPluginEnable();
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
-    }
-
-    private void logBindings(Injector injector) {
-        for (var entry: injector.getAllBindings().entrySet()) {
-            logger.info(entry.getKey() + ": " + entry.getValue());
-        }
+        // Notify onDisable event
+        lifecycleNotifier.notifyPluginDisable();
     }
 }
