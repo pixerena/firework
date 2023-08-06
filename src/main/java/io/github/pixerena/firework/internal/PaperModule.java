@@ -1,4 +1,4 @@
-package io.github.pixerena.firework;
+package io.github.pixerena.firework.internal;
 
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import com.google.inject.AbstractModule;
@@ -22,7 +22,7 @@ import org.bukkit.potion.PotionBrewer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.structure.StructureManager;
 
-class PaperModule extends AbstractModule {
+public class PaperModule extends AbstractModule {
     private final JavaPlugin plugin;
 
     public PaperModule(JavaPlugin plugin) {

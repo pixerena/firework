@@ -6,11 +6,17 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.2.1-SNAPSHOT"
+version = "0.3.0"
 
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+configurations {
+    configurations.testImplementation.get().apply {
+        extendsFrom(configurations.compileOnly.get())
+    }
 }
 
 repositories {
@@ -48,7 +54,7 @@ publishing {
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
                 developers {
@@ -90,4 +96,19 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+
+    exclude("io/github/pixerena/firework/internal/**")
+
+    // Link external library
+    (options as StandardJavadocDocletOptions).links("https://jd.papermc.io/paper/1.20/", "https://google.github.io/guice/api-docs/latest/javadoc/")
+
+    // The following lines will workaround the problem with the exclude
+    var sourceSetDirectories = sourceSets.main.get().java.srcDirs.joinToString(":")
+    (options as StandardJavadocDocletOptions).addStringOption("-source-path", sourceSetDirectories)
+}
+
+tasks.register<Jar>("packageTests") {
+    from(sourceSets.main.get().output, sourceSets.test.get().output, configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveClassifier.set("test")
 }
