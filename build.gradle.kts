@@ -33,6 +33,13 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+    // Add dependency constraints to fix security vulnerabilities
+    constraints {
+        implementation("com.google.guava:guava:32.0.+") {
+            because("versions below 32.0.0 have security vulnerabilities (CVE-2023-2976)")
+        }
+    }
 }
 
 publishing {
