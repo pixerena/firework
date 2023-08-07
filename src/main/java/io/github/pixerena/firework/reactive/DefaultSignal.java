@@ -4,13 +4,13 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 class DefaultSignal<T> implements Signal<T> {
     private @Nullable T value;
-    private final Set<Reaction> subscriptions = new HashSet<>();
+    private final Set<Reaction> subscriptions = ConcurrentHashMap.newKeySet();
 
     private DefaultSignal(@Nullable T value) {
         this.value = value;
