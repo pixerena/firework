@@ -41,6 +41,7 @@ dependencies {
 - [x] Reactive utilities inspired by [SolidJS](https://www.solidjs.com/)
 - [x] Minecraft UI components
     - [x] Custom sidebar using [scoreboard](https://jd.papermc.io/paper/1.20/org/bukkit/scoreboard/Scoreboard.html)
+    - [x] Reactive and persistent action bar
     - [ ] And much more ...
 
 
