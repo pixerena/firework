@@ -1,11 +1,11 @@
 package io.github.pixerena.firework.reactive;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 class Reaction implements Runnable {
     private final Runnable fn;
-    private final Set<Set<Reaction>> dependencies = new HashSet<>();
+    private final Set<Set<Reaction>> dependencies = ConcurrentHashMap.newKeySet();
 
     private Reaction(Runnable fn) {
         this.fn = fn;
