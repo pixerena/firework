@@ -7,6 +7,9 @@
 
 A progressive Minecraft plugin framework for managing event listener with ease and building reactive UI.
 
+> **Warning**
+> Firework framework is under active development and all the API are subject to changes before reaching v1. Use at your own risk.
+
 ## Installation
 
 Install firework with gradle
