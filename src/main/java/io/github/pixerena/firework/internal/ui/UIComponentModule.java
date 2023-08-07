@@ -2,9 +2,11 @@ package io.github.pixerena.firework.internal.ui;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
+import io.github.pixerena.firework.ui.PlayerActionBar;
 import io.github.pixerena.firework.ui.Sidebar;
 import io.github.pixerena.firework.ui.UIComponent;
 import org.jetbrains.annotations.NotNull;
@@ -24,11 +26,17 @@ public class UIComponentModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        // Create UI optional binder
+        // Create UI optional and multi binder
         OptionalBinder.newOptionalBinder(binder(), Sidebar.class);
+        Multibinder<PlayerActionBar> playerActionBarMultibinder = Multibinder.newSetBinder(binder(), PlayerActionBar.class);
 
         for (var entry: uiComponentClasses.entrySet()) {
-            bind(entry.getKey()).to(entry.getValue()).in(Scopes.SINGLETON);
+            if (entry.getKey().equals(PlayerActionBar.class)) {
+                playerActionBarMultibinder.addBinding().to(entry.getValue().asSubclass(PlayerActionBar.class)).in(Scopes.SINGLETON);
+            }
+            else {
+                bind(entry.getKey()).to(entry.getValue()).in(Scopes.SINGLETON);
+            }
         }
     }
 }
