@@ -18,7 +18,7 @@ Install firework with gradle
 // build.gradle.kts
 
 dependencies {
-    implementation("io.github.pixerena:firework:0.4.0")
+    implementation("io.github.pixerena:firework:0.6.0")
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 // build.gradle
 
 dependencies {
-    implementation "io.github.pixerena:firework:0.4.0"
+    implementation "io.github.pixerena:firework:0.6.0"
 }
 ```
 

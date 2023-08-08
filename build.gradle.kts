@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.pixerena"
-version = "0.6.0-SNAPSHOT"
+version = "0.6.0"
 
 java {
     withJavadocJar()
@@ -28,7 +28,7 @@ repositories {
 dependencies {
     api("com.google.inject:guice:7.0.0")
 
-    implementation("io.github.classgraph:classgraph:4.8.161")
+    implementation("io.github.classgraph:classgraph:4.8.162")
 
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
 
