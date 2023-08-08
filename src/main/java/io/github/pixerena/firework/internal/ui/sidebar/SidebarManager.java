@@ -14,10 +14,14 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 @io.github.pixerena.firework.inject.Component
 public class SidebarManager {
     private static final String DEFAULT_OBJECTIVE_NAME = SidebarManager.class.getCanonicalName() + ".DEFAULT_OBJECTIVE_NAME";
+
+    private final ReentrantLock lock = new ReentrantLock(true);
 
     private final List<Score> scores = new ArrayList<>();
     private final Server server;
@@ -66,29 +70,44 @@ public class SidebarManager {
     }
 
     private void renderTitle() {
-        objective.displayName(sidebar.getTitle());
+        objective.displayName(sidebar.getTitle().get());
     }
 
     private void renderContent() {
-        // Remove old scores
-        scores.forEach(score -> scoreboard.resetScores(score.getEntry()));
+        var lineCount = sidebar.getLineCount().get();
+        AtomicInteger emptyCount = new AtomicInteger();
+        for (var i = 0; i < lineCount; i++) {
+            int position = i;
+            Effect.create(() -> {
+                lock.lock();
+                try {
+                    var line = sidebar.getLine(position).get();
 
-        var emptyCount = 0;
-        var content = sidebar.getContent();
-        for (var i = 0; i < content.size(); i++) {
-            var entity = content.get(i);
-            if (entity.isEmpty()) {
-                entity = " ".repeat(emptyCount);
-                emptyCount++;
-            }
-            var score = objective.getScore(entity);
-            score.setScore(content.size() - i);
-            scores.add(score);
+                    // Remove the old score from list and reset it
+                    if (position < scores.size()) {
+                        var oldScore = scores.remove(position);
+                        scoreboard.resetScores(oldScore.getEntry());
+                    }
+
+                    // Handle multiple empty lines
+                    if (line.isEmpty()) {
+                        line = " ".repeat(emptyCount.get());
+                        emptyCount.getAndIncrement();
+                    }
+
+                    // Create new score and insert it to list
+                    var score = objective.getScore(line);
+                    score.setScore(lineCount - position);
+                    scores.add(position, score);
+                } finally {
+                    lock.unlock();
+                }
+            });
         }
     }
 
     private void onDisplayedUpdate() {
-        if (sidebar.isDisplayed()) objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        if (sidebar.isDisplayed().get()) objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         else objective.setDisplaySlot(null);
     }
 }

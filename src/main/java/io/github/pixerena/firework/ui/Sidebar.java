@@ -1,9 +1,8 @@
 package io.github.pixerena.firework.ui;
 
 import io.github.pixerena.firework.internal.ui.UI;
+import io.github.pixerena.firework.reactive.Memo;
 import net.kyori.adventure.text.Component;
-
-import java.util.List;
 
 /**
  * Inherit this class to create a sidebar.
@@ -50,19 +49,16 @@ public abstract class Sidebar {
      *
      * @return the title of the sidebar
      */
-    public abstract Component getTitle();
+    public abstract Memo<Component> getTitle();
 
-    /**
-     * Returns the content of the sidebar.
-     *
-     * @return the content of the sidebar
-     */
-    public abstract List<String> getContent();
+    public abstract Memo<Integer> getLineCount();
+
+    public abstract Memo<String> getLine(int position);
 
     /**
      * Returns whether the sidebar is displayed or not.
      *
      * @return whether the sidebar is displayed or not
      */
-    public abstract boolean isDisplayed();
+    public abstract Memo<Boolean> isDisplayed();
 }
