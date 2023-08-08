@@ -21,21 +21,30 @@ import net.kyori.adventure.text.Component;
  * <pre>
  * {@literal @}UIComponent
  * public class ExampleSidebar extends Sidebar {
- *    {@code private final Signal<String> content = Signal.of("Hello World");}
- *
- *    {@literal @}Override
- *    public Component getTitle() {
- *        return Component.text("Example Sidebar");
+ *    {@literal @}Inject
+ *    public ExampleSidebar() {
+ *        // ...
  *    }
  *
  *    {@literal @}Override
- *    public{@code List<String>} getContent() {
- *        return List.of(content.get());
+ *    public {@code Memo<Component>} getTitle() {
+ *        return Memo.create(() -> Component.text("title"));
  *    }
  *
  *    {@literal @}Override
- *    public boolean isDisplayed() {
- *    return true;
+ *    public {@code Memo<Integer>} getLineCount() {
+ *        return Memo.create(() -> 2);
+ *    }
+ *
+ *    {@literal @}Override
+ *    public {@code Memo<String>} getLine(int position) {
+ *        if (position == 0) return Memo.create(() -> "first line");
+ *        return Memo.create(() -> "second line");
+ *    }
+ *
+ *    {@literal @}Override
+ *    public {@code Memo<Boolean>} isDisplayed() {
+ *        return Memo.create(() -> true);
  *    }
  * }
  * </pre>
@@ -46,19 +55,30 @@ import net.kyori.adventure.text.Component;
 public abstract class Sidebar {
     /**
      * Returns the title of the sidebar.
-     *
      * @return the title of the sidebar
+     * @since 0.6.0
      */
     public abstract Memo<Component> getTitle();
 
+    /**
+     * Returns the number of lines of the sidebar content.
+     * @return the number of lines of the sidebar content
+     * @since 0.6.0
+     */
     public abstract Memo<Integer> getLineCount();
 
+    /**
+     * Returns the line of given position of the sidebar content.
+     * @param position the position of the line to get
+     * @return the line of given position of the sidebar content
+     * @since 0.6.0
+     */
     public abstract Memo<String> getLine(int position);
 
     /**
      * Returns whether the sidebar is displayed or not.
-     *
      * @return whether the sidebar is displayed or not
+     * @since 0.6.0
      */
     public abstract Memo<Boolean> isDisplayed();
 }
